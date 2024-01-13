@@ -1,7 +1,3 @@
-<?php
-include 'connection.php';
-$query=mysqli_query($conn,"SELECT * FROM food_menu");
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,38 +60,7 @@ include 'parsidebar.php';
             
   <!-- /.content-wrapper -->
 
-  <div class="container" style="color:grey">
-    
-    <div class="row" float:right>
-        <div class="col-4">
-
-        </div>
-        <div class="col-4 mt-5">
-            <table class="table table-boredred table-striped bg-info text-light m-5" >
-                <tr>
-                    <th>day</th>
-                    <th>date</th>
-                    <th>break_fast</th>
-                    <th>lunch</th>
-                    <th>dinner</th>
-                </tr>
-            <?php
-            while($row=mysqli_fetch_assoc($query)){
-            ?>
-            <tr> 
-                <td><?php echo $row['day'];?></td>        
-                <td><?php echo $row['date'];?></td>
-                <td><?php echo $row['break_fast'];?></td>
-                <td><?php echo $row['lunch'];?></td>
-                <td><?php echo $row['dinner'];?></td>
-            </tr>
-            <?php
-            }
-            ?>
-    </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> 
-</div>
+  
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -123,5 +88,3 @@ include 'parsidebar.php';
 <script src="dist/js/pages/dashboard2.js"></script>
 </body>
 </html>
-
-

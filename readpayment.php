@@ -1,24 +1,22 @@
+
 <?php
 include 'connection.php';
-if(isset($_POST['submit']))
-{
-  $date=$_POST['date'];
-  $notification=$_POST['notification'];
+$sql=mysqli_query($conn,"SELECT * FROM student_registration INNER JOIN payment ON student_registration.id = payment.stud_id;");
+$data = mysqli_fetch_assoc($sql);
 
-
-$sql=mysqli_query($conn,"INSERT INTO `notification`(`date`, `notification`) VALUES ('$date','$notification')");
-if($sql)
-{
-  echo '<script>alert("Registered Successfully");
-  window.location.href("adcreatenoti.php");</script>';
-}
-else
-{
-  echo 'something went wrong';
-}
-}
+// if (isset($_POST['submit'])) {
+//     $amount = $_POST['amount'];
+//     $type = $_POST['type'];
+//     $stud_id = $_POST['stud_id'];
+//     $payment_status = $_POST['payment_status'];
+//     $sql = mysqli_query($conn, "UPDATE `payment` SET `amount`='$amount', `type`='$type', `stud_id`='$stud_id', `payment_status`='$payment_status' WHERE `payment_id`='$payment_id'");
+//     if ($sql) {
+//         echo '<script>alert("Payment Updated successfully");window.location.href="adeditpay.php";</script>';
+//     } else {
+//         echo "Something went wrong";
+//     }
+// }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,24 +42,21 @@ else
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+ 
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
   <style>
-      
-      .card {
-        background-color: #909099;
-      }
+   table,th,td,tr
+    {
+     border: 2px solid white; 
+     border-collapse:collapse;
 
-      .card-header {
-        background-color: #17a2b8;
-        color: #fff;
-      }
-
-      .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-      }
-    </style>
+    }
+    table
+    {
+      width: 75%;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -82,32 +77,51 @@ include 'sidebar.php'
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-6 mt-5">
-          <div class="card">
-            <div class="card-header text-center">
-              <h5 class="card-title">Feedback Form</h5>
-            </div>
-            <div class="card-body">
-              <form method="POST">
-              <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input type="date" required name="date" class="form-control" id="date" placeholder=" ">
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Notification</label>
-                  <input type="text" required name="notification" class="form-control" id="notification" placeholder=" ">
-                </div>
-                <div class="text-center">
-                  <button type="submit" button click=validateform()   class="btn btn-primary" name="submit">Submit</button>
-                </div>
-              </form>
-           
-        </div>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  <div class="container">
+        <div class="row">
+          
+            <div class="col-12" style="background-color:lightblue; margin: 30px">
+              
+<div>
+                <center>
+                <table  style="width=25%;margin: 20px" >
+                  <thead>
+                    <tr>
+                      <th>Amount</th>
+                      <th>Type</th>
+                      <th>Student Name</th>
+                      <th>Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+            while($row=mysqli_fetch_assoc($sql)){
+            ?>
+            <tr>
+                <!-- <?php echo $row['payment_date'];?>  -->
+                <td><?php echo $row['amount'];?></td>
+                <td><?php echo $row['type'];?></td>
+                <td><?php echo $row['name'];?></td>
+                <td><?php echo $row['payment_status'];?></td>
+               <td><a href="readpayment.php?payment_id=<?php echo $row['payment_id'];?>"class="btn btn-primary">Edit</a></td>
+               <td><a href="addelpay.php?delete_payment_id=<?php echo $row['payment_id'];?>"class="btn btn-danger">Delete</a></td>
+            </tr>
+            <?php
+            }
+            ?>
+                  </tbody>
+                </table>
+          </center>
+          </div>
+          <!-- <form method="POST">
+                    <div class="form-group mt-5">
+                        <input type="number" class="form-control mt-2" name="amount" value="<?php echo $data['amount']; ?>">
+                        <input type="text" class="form-control mt-2" name="type" value="<?php echo $data['type']; ?>">
+                        <input type="text" class="form-control mt-2" name="user_name" value="<?php echo $data['user_name']; ?>">
+                        <input type="text" class="form-control mt-2" name="payment_status" value="<?php echo $data['payment_status']; ?>">
+                        <center><input type="submit" class="btn btn-success mt-2" name="submit" value="Update"></center>
+                    </div>
+                </form> -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -173,3 +187,5 @@ include 'sidebar.php'
 <script src="dist/js/pages/dashboard.js"></script>
 </body>
 </html>
+
+

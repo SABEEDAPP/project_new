@@ -1,6 +1,6 @@
 <?php
 include 'connection.php';
-$query=mysqli_query($conn,"SELECT * FROM food_menu");
+$query=mysqli_query($conn,"SELECT * FROM staff_details");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,31 +63,30 @@ include 'parsidebar.php';
                        
             
   <!-- /.content-wrapper -->
-
-  <div class="container" style="color:grey">
-    
-    <div class="row" float:right>
+  <div class="container mt-5">
+    <div class="row">
         <div class="col-4">
 
         </div>
-        <div class="col-4 mt-5">
-            <table class="table table-boredred table-striped bg-info text-light m-5" >
+        <div class="col-4">
+           
+            <table class="table table-boredred table-striped bg-info text-light">
                 <tr>
-                    <th>day</th>
-                    <th>date</th>
-                    <th>break_fast</th>
-                    <th>lunch</th>
-                    <th>dinner</th>
+                    <th>staff_name</th>
+                    <th>position</th>
+                    <th>From Time</th>
+                    <th>To Time</th>
+                    <th>mobile_number</th>
                 </tr>
             <?php
             while($row=mysqli_fetch_assoc($query)){
             ?>
             <tr> 
-                <td><?php echo $row['day'];?></td>        
-                <td><?php echo $row['date'];?></td>
-                <td><?php echo $row['break_fast'];?></td>
-                <td><?php echo $row['lunch'];?></td>
-                <td><?php echo $row['dinner'];?></td>
+                <td><?php echo $row['staff_name'];?></td>
+                <td><?php echo $row['position'];?></td>
+                <td><?php echo $row['from_time'];?></td>
+                <td><?php echo $row['to_time'];?></td>
+                <td><?php echo $row['mobile_number'];?></td>
             </tr>
             <?php
             }
@@ -95,7 +94,11 @@ include 'parsidebar.php';
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script> 
+ 
+
+ 
 </div>
+  
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
@@ -123,5 +126,6 @@ include 'parsidebar.php';
 <script src="dist/js/pages/dashboard2.js"></script>
 </body>
 </html>
+
 
 

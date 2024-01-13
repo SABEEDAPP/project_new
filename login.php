@@ -10,49 +10,58 @@ if(isset($_POST['submit']))
     {
     $row = mysqli_fetch_assoc($result);
     $hash = password_verify($password,$row['password']);
-    echo var_dump($hash);
+    // echo var_dump($hash);
     $count = mysqli_num_rows($result);
     $type = $row['type'];
-      if($count==1 && $type=="admin" && $hash)
+      if($count==1 && $type=="admin")
        {
             $_SESSION['id'] = $row['login_id'];
             $_SESSION['username'] = $row['username'];
-            // $id = $_SESSION['id'];
+            $id = $_SESSION['id'];
          ?>
           <script>window.location.href="index.php";</script>
           <?php
        }
         
-        elseif($count==1 && $type="student" && $hash)
+        elseif($count==1 && $type=="student" && $hash)
         {
           $_SESSION['id']=$row['login_id'];
           $id=$_SESSION['id'];
-          $query=mysqli_query($conn,"SELECT * FROM `student_registration` WHERE id='$id'");
+          $query=mysqli_query($conn,"SELECT * FROM `student_registration` WHERE email_id='$username'");
           $q=mysqli_fetch_assoc($query);
-          if($q['approval_status']==1)
-          {
+          $_SESSION['sid']=$q['id'];
+          // if($q['approval_status']==1)
+          // {
             ?>
-            <script>window.location.href="stdashboard.php"</script>
+            <script>window.location.href="studentdash.php"</script>
             <?php
-          }
+          // }
         }
-        elseif($count==1 && $type="parent" && $hash)
+        elseif($count==1 && $type=="parent" && $hash)
         {
-          $_SESSION['id']=$row['login_id'];
-          $id=$_SESSION['id'];
-          $query=mysqli_query($conn,"SELECT * FROM `parent_registration` WHERE id='$id'");
+          
+          // $_SESSION['id']=$row['login_id'];
+          // $id=$_SESSION['id'];
+          // var_dump($id);
+          // exit();
+          $query=mysqli_query($conn,"SELECT * FROM `parent_registration` WHERE email_id='$username'");
           $q=mysqli_fetch_assoc($query);
-          if($q['approval_status']==1)
-          {
+          $a=$q['parent_of'];
+          $_SESSION['parent_of']=$a;
+          $_SESSION['pid']=$q['parent_id'];  
+          // var_dump($a);
+          // exit();
+          // if($q['approval_status']==1)
+          // {
             ?>
-            <script>window.location.href="parentdashboard.php"</script>
+            <script>window.location.href="parentdash.php"</script>
             <?php
-          }
+          // }
         
-        else
-           {
-            echo "invalid username and password";
-          }
+        // else
+        //    {
+        //     echo "invalid username and password";
+        //   }
         }
       }
 }
@@ -96,15 +105,15 @@ if(isset($_POST['submit']))
     <form method="POST" required>
     <div class="form-group">
     <label class="form-label">username</label>
-    <input type="text" name="username" class="form-control">
+    <input type="text" required name="username" class="form-control">
   </div>
   <div class="form-group">
     <label class="form-label">password</label>
-    <input type="password" name="password" class="form-control">
+    <input type="password" required name="password" class="form-control">
   </div>
-  <button type="submit"  class="btn btn-primary" name="submit">Login</button>
-  <a href="studentregistration.php" class="btn btn-primary">Student </a>
-  <a href="parentregistration.php" class="btn btn-primary">Parent </a>
+  <button type="submit" button click=validateform()  class="btn btn-primary" name="submit">Login</button><br>
+  <a href="studentregistration.php" class="text" class="btn btn-primary">Student Registration </a>
+  <a href="parentregistration.php" class="text" class="btn btn-primary">Parent Registration</a>
   </form>
   </div>
 </div>

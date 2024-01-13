@@ -1,23 +1,28 @@
 <?php
 include 'connection.php';
+
 if(isset($_POST['submit']))
 {
-  $date=$_POST['date'];
-  $notification=$_POST['notification'];
+ $hostel_id=$_POST['hostel_id'];
+ $image=$_FILES['f1']['name'];
+ if($image!="")
+ {
+    $filearray=pathinfo($_FILES['f1']['name']);
+    $file1=rand();
+    $file_ext=$filearray["extension"];
+    $filenew=$file1.".".$file_ext;
+    move_uploaded_file($_FILES['f1']['tmp_name'],"img/".$filenew);
 
-
-$sql=mysqli_query($conn,"INSERT INTO `notification`(`date`, `notification`) VALUES ('$date','$notification')");
-if($sql)
-{
-  echo '<script>alert("Registered Successfully");
-  window.location.href("adcreatenoti.php");</script>';
-}
-else
-{
-  echo 'something went wrong';
-}
+ }   
+ else
+ {
+    echo "<script>alert('please try again')</script>";
+ }
+ 
+ mysqli_query($conn,"UPDATE  `hostel_table` SET `hostel_image`='$filenew' WHERE hostel_id='$hostel_id' ");
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,22 +51,6 @@ else
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-  <style>
-      
-      .card {
-        background-color: #909099;
-      }
-
-      .card-header {
-        background-color: #17a2b8;
-        color: #fff;
-      }
-
-      .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-      }
-    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -75,6 +64,8 @@ else
   include 'navbar.php'
   ?>
 
+     
+
   <!-- Main Sidebar Container -->
  
 <?php 
@@ -82,37 +73,33 @@ include 'sidebar.php'
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-6 mt-5">
-          <div class="card">
-            <div class="card-header text-center">
-              <h5 class="card-title">Feedback Form</h5>
-            </div>
-            <div class="card-body">
-              <form method="POST">
-              <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input type="date" required name="date" class="form-control" id="date" placeholder=" ">
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Notification</label>
-                  <input type="text" required name="notification" class="form-control" id="notification" placeholder=" ">
-                </div>
-                <div class="text-center">
-                  <button type="submit" button click=validateform()   class="btn btn-primary" name="submit">Submit</button>
-                </div>
-              </form>
-           
-        </div>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-12">
             <h1 class="m-0">  </h1>
+            <div class="container">
+      <div class="row">
+        <div class="col-4 marg">
+          <form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+    <label class="form-label">Hostel ID</label>
+    <input type="text" required pattern="^[1-9][0-9]?$|^100$" name="hostel_id" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+  </div>
+    <div class="mb-3">
+    <label class="form-label">Room Number</label>
+    <input type="text" required pattern="^[1-9][0-9]?$|^100$"  name="room_number" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+  </div>
+      <div class="mb-3">
+          <input type="file" required pattern="([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)0ih" id="image_id" name="f1" placeholder="image">
+</div>
+        <button button click=validateform() name="submit">Submit</button>
+        <a href="imageadding.php">View</a>
+    </form>
+        </div>
+      </div>
+    </div>
           </div><!-- /.col -->
           <div class="col-sm-6"> 
             <!-- /.card -->
@@ -173,3 +160,9 @@ include 'sidebar.php'
 <script src="dist/js/pages/dashboard.js"></script>
 </body>
 </html>
+
+
+
+    
+
+ 

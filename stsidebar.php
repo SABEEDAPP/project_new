@@ -1,12 +1,13 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+ <!-- Main Sidebar Container -->
+ <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">AdminLTE 3</span>
     </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
+ 
+ <!-- Sidebar -->
+ <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
@@ -28,9 +29,8 @@
           </div>
         </div>
       </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
+<!-- Sidebar Menu -->
+ <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -44,66 +44,52 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="adstaff.php" class="nav-link active">
+                <a href="pviewstaff.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>create staff</p>
+                  <p>View Staff</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="adeditstaff.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Edit Staff</p>
-                </a>
-              </li>
-              <!-- <li class="nav-item">
-                <a href="addelstaff.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Delete Staff</p>
-                </a>
-              </li> -->
             </ul>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="" class="nav-link">
+              
               <i class="nav-icon fas fa-chart-pie"></i>
               <p>
-                Food
+              Food
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right"> </span>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="adfood.php" class="nav-link">
+                <a href="adviewfood.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Food</p>
+                  <p>View Food</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="adeditfood.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Edit Food</p>
-                </a>
-              </li>
+          
             </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>Booking</p>
+            <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Booking
+                <i class="right fas fa-angle-left"></i>
+              </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="adviewbooking.php" class="nav-link">
+                <a href="spcreatebooking.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Read Booking</p>
+                  <p>Create Booking</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+            <i class="nav-icon fas fa-table"></i>
               <p>
                 Room Facility
                 <i class="fas fa-angle-left right"></i>
@@ -111,15 +97,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="admroom.php" class="nav-link">
+                <a href="adviewroom.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Room</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="hosimageuploading.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Upload Hostel Image</p>
+                  <p>View Room</p>
                 </a>
               </li>
             </ul>
@@ -134,9 +114,9 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="admviewfeedback.php" class="nav-link">
+                <a href="spcreatefeedback.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Read Feedback</p>
+                  <p>Create Feedback</p>
                 </a>
               </li>
             </ul>
@@ -151,44 +131,29 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="readpayment.php" class="nav-link">
+                <a href="paymentform.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Read Payment</p>
+                  <p>Create Payment</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="adeditpay.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Update Payment</p>
-                </a>
-              </li>
-              <!-- <li class="nav-item">
-                <a href="addelpay.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Delete Payment</p>
-                </a>
-              </li> -->
+              
             </ul>
           </li>
-  
+    
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon far fa-envelope"></i>
               <p>
-                Notifications
+                Notification
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="adcreatenoti.php" class="nav-link">
+                <a href="spreadnoti.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Notification</p>
+                  <p>Read Notification</p>
                 </a>
               </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+            </ul>
+</aside>

@@ -1,23 +1,10 @@
 <?php
 include 'connection.php';
-if(isset($_POST['submit']))
-{
-  $date=$_POST['date'];
-  $notification=$_POST['notification'];
-
-
-$sql=mysqli_query($conn,"INSERT INTO `notification`(`date`, `notification`) VALUES ('$date','$notification')");
-if($sql)
-{
-  echo '<script>alert("Registered Successfully");
-  window.location.href("adcreatenoti.php");</script>';
-}
-else
-{
-  echo 'something went wrong';
-}
-}
+// $payment_id = $_GET['payment_id'];
+$query=mysqli_query($conn,"SELECT * FROM `student_registration` INNER JOIN payment ON payment.stud_id=student_registration.id; ");
+$data=mysqli_fetch_assoc($query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,22 +33,6 @@ else
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-  <style>
-      
-      .card {
-        background-color: #909099;
-      }
-
-      .card-header {
-        background-color: #17a2b8;
-        color: #fff;
-      }
-
-      .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-      }
-    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -82,39 +53,50 @@ include 'sidebar.php'
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-6 mt-5">
-          <div class="card">
-            <div class="card-header text-center">
-              <h5 class="card-title">Feedback Form</h5>
-            </div>
-            <div class="card-body">
-              <form method="POST">
-              <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input type="date" required name="date" class="form-control" id="date" placeholder=" ">
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Notification</label>
-                  <input type="text" required name="notification" class="form-control" id="notification" placeholder=" ">
-                </div>
-                <div class="text-center">
-                  <button type="submit" button click=validateform()   class="btn btn-primary" name="submit">Submit</button>
-                </div>
-              </form>
-           
-        </div>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">  </h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6"> 
+            <h1 class="m-0">
+                <table>
+                <h3 class="card-title">Bordered Table</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">Amount</th>
+                      <th>Type</th>
+                      <th>Student Name</th>
+                      <th style="width: 40px">Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <?php
+            while($row=mysqli_fetch_assoc($query)){
+            ?>
+            <tr> 
+                <td><?php echo $row['amount'];?></td>
+                <td><?php echo $row['type'];?></td>
+                <td><?php echo $row['name'];?></td>
+                <td><?php echo $row['payment_status'];?></td>
+               <td><a href="readpayment.php?payment_id=<?php echo $row['payment_id'];?>"class="btn btn-primary">Edit</a></td>
+               <td><a href="addelpay.php?delete_payment_id=<?php echo $row['payment_id'];?>"class="btn btn-danger">Delete</a></td>
+            </tr>
+            <?php
+            }
+            ?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              
+            </div>
+            <!-- /.card -->
+
+           
             <!-- /.card -->
           </section>
           <!-- /.Left col -->

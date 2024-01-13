@@ -1,24 +1,25 @@
+
 <?php
 include 'connection.php';
-if(isset($_POST['submit']))
-{
-  $date=$_POST['date'];
-  $notification=$_POST['notification'];
+$food_id = $_GET['food_id'];
 
+$query = mysqli_query($conn, "SELECT * FROM `food_menu` WHERE food_id='$food_id'");
+$data = mysqli_fetch_assoc($query);
 
-$sql=mysqli_query($conn,"INSERT INTO `notification`(`date`, `notification`) VALUES ('$date','$notification')");
-if($sql)
-{
-  echo '<script>alert("Registered Successfully");
-  window.location.href("adcreatenoti.php");</script>';
-}
-else
-{
-  echo 'something went wrong';
-}
+if (isset($_POST['submit'])) {
+    $name = $_POST['day'];
+    $date = $_POST['date'];
+    $break_fast = $_POST['break_fast'];
+    $lunch = $_POST['lunch'];
+    $dinner = $_POST['dinner'];
+    $sql = mysqli_query($conn, "UPDATE `food_menu` SET `day`='$day', `date`='$date', `break_fast`='$break_fast', `lunch`='$lunch' WHERE `food_id`='$food_id'");
+    if ($sql) {
+        echo '<script>alert("Updated successfully");window.location.href="adeditfood.php";</script>';
+    } else {
+        echo "Something went wrong";
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,22 +47,6 @@ else
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
-  <style>
-      
-      .card {
-        background-color: #909099;
-      }
-
-      .card-header {
-        background-color: #17a2b8;
-        color: #fff;
-      }
-
-      .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-      }
-    </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -82,32 +67,23 @@ include 'sidebar.php'
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-6 mt-5">
-          <div class="card">
-            <div class="card-header text-center">
-              <h5 class="card-title">Feedback Form</h5>
+  <div class="container">
+        <div class="row">
+            <div class="col-4">
             </div>
-            <div class="card-body">
-              <form method="POST">
-              <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input type="date" required name="date" class="form-control" id="date" placeholder=" ">
-                </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">Notification</label>
-                  <input type="text" required name="notification" class="form-control" id="notification" placeholder=" ">
-                </div>
-                <div class="text-center">
-                  <button type="submit" button click=validateform()   class="btn btn-primary" name="submit">Submit</button>
-                </div>
-              </form>
-           
-        </div>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+            <div class="col-4 mt-5" style="background-color: bisque">
+                <h5>Edit your details here</h5>
+
+                <form method="POST">
+                    <div class="form-group mt-5">
+                        <input type="text" class="form-control mt-2" name="day" value="<?php echo $data['day']; ?>">
+                        <input type="datetime-local" class="form-control mt-2" name="date" value="<?php echo $data['date']; ?>">
+                        <input type="text" class="form-control mt-2" name="break_fast" value="<?php echo $data['break_fast']; ?>">
+                        <input type="text" class="form-control mt-2" name="lunch" value="<?php echo $data['lunch']; ?>">
+                        <input type="text" class="form-control mt-2" name="dinner" value="<?php echo $data['dinner']; ?>">
+                        <center><input type="submit" class="btn btn-success mt-2" name="submit" value="Update"></center>
+                    </div>
+                </form>
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -173,3 +149,5 @@ include 'sidebar.php'
 <script src="dist/js/pages/dashboard.js"></script>
 </body>
 </html>
+
+

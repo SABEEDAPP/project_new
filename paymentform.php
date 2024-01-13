@@ -1,19 +1,18 @@
 <?php
 include 'connection.php';
+session_start();
+$stud_id=$_SESSION['parent_of'];
 if(isset($_POST['submit']))
 {
-    $parent_id=$_POST['parent_id'];
-    $student_id=$_POST['student_id'];
     $amount=$_POST['amount'];
     $type=$_POST['type'];
-    $user_name=$_POST['user_name'];
     $payment_status=$_POST['payment_status'];
    
-    $sql=mysqli_query($conn,"INSERT INTO `payment`(`parent_id`, `student_id`, `amount`, `type`, `user_name`, `payment_status`) VALUES ('$parent_id','$student_id','$amount','$type','$user_name','$payment_status')");
+    $sql=mysqli_query($conn,"INSERT INTO `payment`( `amount`, `type`, `payment_status`,`stud_id`) VALUES ('$amount','$type','$payment_status','$stud_id')");
     $log=mysqli_insert_id($conn);
     if($sql)
     {
-        echo '<script>alert("data inserted");window.location.href=" "</script>';
+        echo '<script>alert("Payment Completed");window.location.href=" "</script>';
     }
     else
     {
@@ -22,106 +21,123 @@ if(isset($_POST['submit']))
 }
 
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Payment Form</title>
-  <style>
-    /* Form container */
-    .form-container {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #f2f2f2;
-    }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Dashboard 2</title>
 
-    /* Form fields */
-    .form-group {
-      margin-bottom: 10px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    .form-group input[type="text"] {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+ 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+ 
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
-    /* Payment button */
-    .btn-payment {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-    }
-    .btn-payment:hover {
-      background-color: #45a049;
-    }
-  </style>
-</head>
-<body>
-  <center><h2>Payment Form</h2></center>
-  <div class="form-container">
-    <form id="payment-form">
-      <div class="form-group">
-        <label for="payment_id">Payment ID:</label>
-        <input type="text" id="payment_id" name="payment_id" required>
-      </div>
-      <div class="form-group">
-        <label for="parent_id">Parent ID:</label>
-        <input type="text" id="parent_id" name="parent_id" required>
-      </div>
-      <div class="form-group">
-        <label for="student_id">Student ID:</label>
-        <input type="text" id="student_id" name="student_id" required>
-      </div>
-      <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" required>
-      </div>
-      <div class="form-group">
-        <label for="type">Type:</label>
-        <input type="text" id="type" name="type" required>
-      </div>
-      <div class="form-group">
-        <label for="user_name">User Name:</label>
-        <input type="text" id="user_name" name="user_name" required>
-      </div>
-      <div class="form-group">
-        <label for="payment_status">Payment Status:</label>
-        <input type="text" id="payment_status" name="payment_status" required>
-      </div>
-      <button type="submit" class="btn-payment">Make Payment</button>
-    </form>
-  </div>
-
-  <script>
-    document.getElementById("payment-form").addEventListener("submit", function(event))
-     
-      event.preventDefault(); // Prevent form submission
-
-      // Get form data
-      var formData = new FormData(this);
-      var paymentData = {};
-      for (var pair of formData.entries()) {
-        paymentData[pair[0]] = pair[1];
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      
+      .card {
+        background-color: #f8f9fa;
       }
 
-      // Send the payment data to the server or perform necessary actions
-      console.log(paymentData); // Example: log the data to the console
+      .card-header {
+        background-color: #17a2b8;
+        color: #fff;
+      }
 
-      // Optionally, you can redirect the user to a payment gateway or process the payment here
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+    </style>
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
 
-  </script>
+  Preloader
+ 
+
+  <?php
+  include 'parnavbar.php';
+  ?>
+
+   
+<?php
+include 'parsidebar.php';
+?>
+  <div class="row">
+          <!-- Left col -->
+      <div class="col-md-8">
+            <!-- MAP & BOX PANE -->
+            
+            <!-- /.card -->            
+
+          </div>
+</div>
+                       
+            
+  <!-- /.content-wrapper -->
+  <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6 mt-5">
+          <div class="card">
+            <div class="card-header text-center">
+              <h5 class="card-title">Payment Form</h5>
+            </div>
+            <div class="card-body">
+              <form method="POST">
+                <div class="mb-3">
+                  <label for="amount" class="form-label">Enter Amount </label>
+                  <input type="number" name="amount" class="form-control" id="amount" placeholder=" ">
+                </div>
+                <div class="mb-3">
+                  <label for="type" class="form-label">Enter Type</label>
+                  <input type="text" name="type" class="form-control" id="type" placeholder=" ">
+                </div>
+               
+                <div class="mb-3">
+                  <label for="payment_status" class="form-label">Enter Payment Status</label>
+                  <input type="text" name="payment_status" class="form-control" id="payment_status" placeholder=" ">
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" name="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.js"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="plugins/raphael/raphael.min.js"></script>
+<script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="plugins/chart.js/Chart.min.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard2.js"></script>
 </body>
 </html>
+
+
